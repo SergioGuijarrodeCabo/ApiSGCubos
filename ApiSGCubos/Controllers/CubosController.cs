@@ -119,23 +119,44 @@ namespace ApiSGCubos.Controllers
      
         }
 
+        //[Authorize]
+        //[HttpPost]
+        //[Route("[action]/{id_pedido}/{id_cubo}/{fechapedido}/")]
+        //[ProducesResponseType(StatusCodes.Status201Created)]
+        //[ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        //public async Task<ActionResult> CreatePedido(int id_pedido, int id_cubo, DateTime fechapedido)
+        //{
+        //    Claim claim = HttpContext.User.Claims
+        //  .SingleOrDefault(x => x.Type == "UserData");
+        //    string jsonEmpleado =
+        //        claim.Value;
+        //    Usuario usuario = JsonConvert.DeserializeObject<Usuario>
+        //        (jsonEmpleado);
+
+        //    await this.repo.InsertarPedidoAsync(id_pedido, id_cubo, usuario.Id_Usuario, fechapedido);
+
+        //    return Ok();
+        //}
+
         [Authorize]
         [HttpPost]
-        [Route("[action]/{id_pedido}/{id_cubo}/{fechapedido}/")]
+        [Route("createpedido/{id_cubo}/{fechapedido}")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult> CreatePedido(int id_pedido, int id_cubo, DateTime fechapedido)
+        public async Task<ActionResult> CreatePedido(int id_cubo, DateTime fechapedido)
         {
             Claim claim = HttpContext.User.Claims
-          .SingleOrDefault(x => x.Type == "UserData");
-            string jsonEmpleado =
-                claim.Value;
-            Usuario usuario = JsonConvert.DeserializeObject<Usuario>
-                (jsonEmpleado);
+                .SingleOrDefault(x => x.Type == "UserData");
+            string jsonEmpleado = claim.Value;
+            Usuario usuario = JsonConvert.DeserializeObject<Usuario>(jsonEmpleado);
+
+            int id_pedido = await this.repo.LastPedido() + 1;
 
             await this.repo.InsertarPedidoAsync(id_pedido, id_cubo, usuario.Id_Usuario, fechapedido);
 
-            return Ok();
+            return StatusCode(StatusCodes.Status201Created);
         }
+
+
     }
 }

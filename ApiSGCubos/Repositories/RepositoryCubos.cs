@@ -84,5 +84,16 @@ namespace ApiSGCubos.Repositories
                 .FirstOrDefaultAsync(x => x.Nombre == nombre
                 && x.Pass == pass);
         }
+
+        public async Task<int> LastPedido()
+        {
+            int lastPedidoId = await this.context.Pedidos
+                .OrderByDescending(p => p.Id_Pedido)
+                .Select(p => p.Id_Pedido)
+                .FirstOrDefaultAsync();
+
+            return lastPedidoId;
+        }
+
     }
 }
