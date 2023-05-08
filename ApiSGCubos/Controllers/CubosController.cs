@@ -38,14 +38,14 @@ namespace ApiSGCubos.Controllers
             return await this.repo.GetCubosMarcaAsync(marca);
         }
 
-        [HttpPost]
-        public async Task<ActionResult>
-        InsertUsuario(Usuario usuario)
-        {
-            await this.repo.InsertarUsuarioAsync
-                (usuario.Id_Usuario, usuario.Nombre, usuario.Imagen, usuario.Email, usuario.Pass);
-            return Ok();
-        }
+        //[HttpPost]
+        //public async Task<ActionResult>
+        //InsertUsuario(Usuario usuario)
+        //{
+        //    await this.repo.InsertarUsuarioAsync
+        //        (usuario.Id_Usuario, usuario.Nombre, usuario.Imagen, usuario.Email, usuario.Pass);
+        //    return Ok();
+        //}
 
         //[HttpPost]
         //public async Task<ActionResult>
@@ -55,6 +55,22 @@ namespace ApiSGCubos.Controllers
         //            (cubo.Id_Cubo, cubo.Nombre, cubo.Imagen, cubo.Marca, cubo.Precio);
         //        return Ok();
         // }
+
+        [HttpPost("usuario")]
+        public async Task<ActionResult> InsertUsuario(Usuario usuario)
+        {
+            await this.repo.InsertarUsuarioAsync
+                (usuario.Id_Usuario, usuario.Nombre, usuario.Imagen, usuario.Email, usuario.Pass);
+            return Ok();
+        }
+
+        [HttpPost("cubo")]
+        public async Task<ActionResult> InsertCubo(Cubo cubo)
+        {
+            await this.repo.InsertarCuboAsync
+                (cubo.Id_Cubo, cubo.Nombre, cubo.Imagen, cubo.Marca, cubo.Precio);
+            return Ok();
+        }
 
 
         //[HttpGet("{id}")]
