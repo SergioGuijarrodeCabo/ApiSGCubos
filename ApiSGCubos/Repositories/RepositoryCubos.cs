@@ -75,5 +75,14 @@ namespace ApiSGCubos.Repositories
             await this.context.SaveChangesAsync();
 
         }
+
+        public async Task<Usuario> ExisteUsuarioAsync
+          (string nombre, string pass)
+        {
+            return await
+                this.context.Usuario
+                .FirstOrDefaultAsync(x => x.Nombre == nombre
+                && x.Pass == pass);
+        }
     }
 }
